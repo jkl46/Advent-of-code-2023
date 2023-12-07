@@ -6,5 +6,5 @@ def part1():
 def part2():
 	pass
 
-print(f"awnser to part 1:{part1()}")
-print(f"awnser to part 2:{part2()}")
+print(f"awnser to part 1: {part1()}")
+print(f"awnser to part 2: {part2()}")
