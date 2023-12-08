@@ -1,6 +1,6 @@
 inp = [[char for char in x.rstrip() ]for x in open('input.txt', 'r')]
 
-def part1(): # it ain't pretty, but it works...
+def part1(): 
 	nums = '1234567890'
 	def findAndReplace(x, y):
 		num = ''

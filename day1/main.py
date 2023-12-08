@@ -1,4 +1,4 @@
-inp = [line.rstrip() for line in open("input.txt", "r")] # store lines in input.txt as array, remove \n
+inp = [line.rstrip() for line in open("input.txt", "r")] 
 
 def part1():
 	nums = '1234567890'
@@ -27,18 +27,18 @@ def part2():
 				return char
 
 			else: # if character maybe is part of "one", "two", "three"
-				for thisIdx, number in enumerate(numsInWord): # note: going out of index while slicing a string will not cause error
+				for thisIdx, number in enumerate(numsInWord): 
 					if reverse:
 						number = number[::-1]
 
 					if line[idx:idx+len(number)] == number:
-						return str(thisIdx) # i.e "eight", is at index 8 in numsInWord array, no need to extract value from dictionary
+						return str(thisIdx) 
 
 		raise Exception("not good")
 
 	for line in inp:
 		a = findFirstChar(line)
-		b = findFirstChar(line[::-1], reverse=True) # to find the last number in line use same function but reverse string and reverse search match i.e "eight" -> "thgie"
+		b = findFirstChar(line[::-1], reverse=True) 
 		totalSum += int(a + b)
 	return totalSum
 

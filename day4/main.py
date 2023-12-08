@@ -20,7 +20,7 @@ def part1():
 	return total
 
 
-def part2(): # Starting with copy of part 1
+def part2(): 
 	cardCount = {}
 	for x in range(1,204):
 		cardCount[str(x)] = 1
