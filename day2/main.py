@@ -1,3 +1,4 @@
+import sys
 inp = [line.rstrip() for line in open('input.txt', 'r')]
 
 def part1():
@@ -5,6 +6,8 @@ def part1():
 	maxGreen = 13
 	maxBlue = 14
 	idSum = 0
+
+	color = {}
 
 	for idx, line in enumerate(inp):
 		r = 0
@@ -14,24 +17,18 @@ def part1():
 		line = line.replace(";", "")
 		line = line.replace(",", "")
 		line = line.split()[2:]
-		print(line)
 
-		for x in range(0, len(line), 2):
-			n = int(line[x])
-			color = line[x+1]
 
-			if color == 'red':
-				r += n
+		for x in range(1, len(line), 2):
+			if line[x] not in color:
+				color[line[x]] = 0
+			else:
+				color[line[x]] += int(line[x-1])
 
-			elif color == 'green':
-				g += n
-
-			elif color == 'blue':
-				b += n
-
-		if r <= maxRed:
-			if g <= maxGreen:
-				if b <= maxBlue:
+		print(color)
+		if r <= color['red']:
+			if g <= color['green']:
+				if b <= color['blue']:
 					idSum += idx + 1
 
 	return idSum

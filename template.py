@@ -1,3 +1,4 @@
+import sys
 inp = [line.rstrip() for line in open("input.txt", "r")]
 
 def part1():
