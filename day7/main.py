@@ -34,7 +34,7 @@ class Hand:
 		self.handScore = self.getHandScore(hand)
 		self.bid = int(bid)
 
-		# Create hashlike value from hand with (cardValue*1000)**10. AA9AB will be greater than AA9KB 
+		# Create hashlike value from hand with (cardValue*1000)**(position*10). position is index in hand. AA9AB will be greater than AA9KB 
 		self.handValue = sum([pow(cardToVal[x] * 1000, (len(hand) - idx) *10) for idx, x in enumerate(hand)]) 
 
 
