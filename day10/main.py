@@ -11,7 +11,7 @@ possibleConnections = {
 	"S" : (NORTH, EAST, SOUTH, WEST),
 	"|" : (NORTH, SOUTH),
 	"-" : (EAST, WEST),
-	"L" : (SOUTH, EAST),
+	"L" : (SOUTH, EAST), # southward is increasing index in a 2d grid. north and south need to be switched
 	"J" : (SOUTH, WEST),
 	"7" : (NORTH, WEST),
 	"F" : (NORTH, EAST),
