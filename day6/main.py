@@ -1,15 +1,14 @@
-inp = [[55, 401], [99, 1485], [97, 2274], [93, 1405]] # only 8 numbers for input. parsing from file not really necessary
+import sys
+inp = [[int(x) for x in line.rstrip().split(" ")[1:] if x != ''] for line in open("input.txt", "r")]
+
 
 def part1():
 	getDistance = lambda timePressed, timing :  (x * (timing - x))
 
 	points = 1
 
-	for race in inp:
+	for time, distance in zip(inp[0], inp[1]):
 		fasterTimes = 0
-
-		time = race[0]
-		distance = race[1]
 
 		for x in range(1, time):
 			if getDistance(x, time) > distance:
@@ -19,29 +18,36 @@ def part1():
 
 	return points
 
-def part2(): # takes a very long time calculate. the part2.cpp should calculate it in just a few seconds. this function could take 60+ minutes
+def part2(): 
 	getDistance = lambda timePressed, timing :  (x * (timing - x))
 	points = 1
 
-	time = ''
-	distance = ''
+	time = int(''.join([str(x) for x in inp[0]]))
+	distance = int(''.join([str(x) for x in inp[1]]))
 
-	for x in inp:
-		time += str(x[0])
-		distance += str(x[1])
+	lowerBounds = 0
+	running = True
+	significance = 1
 
-	time = int(time)
-	distance = int(distance)
+	x = 0
+	steps = 1
 
-	fasterTimes = 0
+	while getDistance(x, time) < distance: # Find first faster time
+		x += 1
 
-	for x in range(1, time):
-		if getDistance(x, time) > distance:
-			print(x / time * 100)
-			fasterTimes += 1
+	lowerBounds = x
 
-	return fasterTimes
+	while getDistance(x, time) > distance: # Find first slower time, increase steps exponetionally
+		steps *= 2
+		x += steps
 
+	steps = 1
+	while getDistance(x, time) < distance: # Find last faster time by decreasing steps
+		x -= steps
+
+	x += 1
+
+	return x - lowerBounds
 
 
 print(f"awnser to part 1: {part1()}")
