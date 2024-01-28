@@ -14,13 +14,11 @@ def part1():
 def part2():
 	result = 0
 
-
 	nums = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', *[str(x) for x in range(10)]]
 	numToInt = {key: x % 10 for key, x in zip(nums, range(20))} 
 
 	getNums = re.compile(f'{"|".join(nums)}')
 	getReversedNums = re.compile(f'{"|".join(list(map(lambda x: x[::-1], nums)))}')
-	print(getReversedNums)
 
 	for line in inp:
 		firstNum = numToInt[getNums.search(line).group()]
