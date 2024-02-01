@@ -1,6 +1,9 @@
 import sys
 from collections import Counter
+from itertools import product
 inp = [line.rstrip() for line in open("input.txt", "r")]
+
+# VERY MESSY BUT WORKS
 
 rankMax = len(inp)
 
@@ -99,8 +102,92 @@ def part1():
 
 	return total
 
-def part2():
-	pass
-
 print(f"awnser to part 1: {part1()}")
+
+
+
+
+
+cardsInOrder = 'AKQT98765432J'
+cardToVal = {''.join(combo) : i for i, combo in enumerate(product(cardsInOrder, repeat=5))}
+
+class Hand:
+	def __init__(self, hand, bid):
+		self.hand = hand
+		self.handScore = self.getHandScore(hand)
+		self.bid = int(bid)
+		# Create hashlike value from hand with (cardValue*1000)**(position*10). position is index in hand. AA9AB will be greater than AA9KB 
+		self.handValue = cardToVal[hand]
+
+
+	def getHandScore(self, hand):
+
+		if hand == "JJJJJ": # 1 edge case
+			hand = "AAAAA"
+			
+		c = Counter(hand)	
+
+		if "J" in c:
+			jokers = c.pop("J", None)
+			s = sorted(list(c.keys()), key=lambda x: c[x], reverse=True)
+			c[s[0]] += jokers
+		cards = [x for x in c.values()]
+		cards = [x for x in sorted(cards, reverse=True)]
+
+		if cards[0] == 5:
+			return FIVE_OF_A_KIND
+
+		elif cards[0] == 4:
+			return FOUR_OF_A_KIND
+
+		elif cards[0] == 3 and cards[1] == 2:
+			return FULL_HOUSE
+
+		elif cards[0] == 3:
+			return THREE_OF_A_KIND
+
+		elif cards[0] == 2 and cards[1] == 2:
+			return TWO_PAIR
+
+		elif cards[0] == 2: 
+			return ONE_PAIR
+		else:
+			return HIGH_CARD
+
+	def __repr__(self):
+		return str(self.hand)
+
+def part2(): # Starting with copy of part 1
+	cards = {
+		FIVE_OF_A_KIND: [],
+		FOUR_OF_A_KIND: [],
+		FULL_HOUSE: [],
+		THREE_OF_A_KIND: [],
+		TWO_PAIR: [],
+		ONE_PAIR: [],
+		HIGH_CARD: [],
+	}
+
+	for line in inp:
+		line = line.split(" ")
+		handCards = line[0]	
+		bid = line[1]
+
+		hand = Hand(handCards, bid)
+		cards[hand.handScore].append(hand)
+
+	for x in range(1, 8): 
+		a = sorted(cards[x], key=lambda x : x.handValue)
+		print(a)
+		cards[x] = a
+
+	total = 0
+	cRank = rankMax
+	for cardList in cards.values():
+		for card in cardList:
+			total += card.bid * cRank
+			cRank -= 1
+
+	return total
+
 print(f"awnser to part 2: {part2()}")
